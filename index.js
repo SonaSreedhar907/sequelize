@@ -5,11 +5,24 @@ const sequelize = new Sequelize('sys','root','root',{
     dialect : 'mysql'
 })  
 
+const Users = sequelize.define('user',{
+    username:{
+       type : Sequelize.DataTypes.STRING,
+       allowNull : false
+    },
+    password:{
+       type : Sequelize.DataTypes.STRING,
+    },
+    age:{
+       type : Sequelize.DataTypes.INTEGER,
+       defaultValue : 21
+    }
+})
 
-async function myFunction(){
-  await sequelize.authenticate()
-  console.log('connection succesffull sona')
-}
-myFunction()
+Users.sync().then((data)=>{
+    console.log("Table and model synced succesffuly")
+}).catch((err)=>{
+    console.log("error syncing the table and model")
+})
 
 console.log('hi')
