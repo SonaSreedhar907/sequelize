@@ -34,21 +34,23 @@ const User = sequelize.define('user',{
 console.log(sequelize.models.user)
 
 User.sync({ alter:true }).then((data)=>{
-     //working with our updated table
-     return User.create({
-        username : 'sona',
-        age : 24 ,
-        password : "sonaakhil",
-        wittCodeRocks : true
-     })
-}).then((data)=>{
-    console.log('user added to database',data.toJSON())
-    data.username = 'mango'
-    data.age = 45
-    return data.save()
-}).then((data)=>{
-    console.log('data is ',data.toJSON())
-})
+   return User.bulkCreate(
+    [{
+      username:'punya',
+      age:12,
+      password:"punya",
+      wittCodeRocks:true
+    },
+    {
+      username:"juhi",
+      age:2,
+      password:"juhi",
+      wittCodeRocks:true
+    }]
+   )
+}).then((data)=>data.forEach(element => {
+    console.log(element.toJSON())
+}))
 .catch((err)=>{
     console.log("error syncing the table and model")
 })
