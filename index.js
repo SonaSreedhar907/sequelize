@@ -13,7 +13,10 @@ const User = sequelize.define('user',{
     },
     username:{
        type : DataTypes.STRING,
-       allowNull : false
+       allowNull : false,
+       validate:{
+        len:[4,6]
+       }
     },
     password:{
        type : DataTypes.STRING,
@@ -34,18 +37,9 @@ const User = sequelize.define('user',{
 console.log(sequelize.models.user)
 
 User.sync({ alter:true }).then((data)=>{
-   return User.bulkCreate(
+   return User.create(
     [{
-      username:'punya',
-      age:12,
-      password:"punya",
-      wittCodeRocks:true
-    },
-    {
-      username:"juhi",
-      age:2,
-      password:"juhi",
-      wittCodeRocks:true
+        username:"poouiugvissdfafagagga"
     }]
    )
 }).then((data)=>data.forEach(element => {
