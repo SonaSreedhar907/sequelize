@@ -5,7 +5,12 @@ const sequelize = new Sequelize('sys','root','root',{
     dialect : 'mysql'
 })  
 
-const Users = sequelize.define('user',{
+const User = sequelize.define('user',{
+    user_id:{
+      type : Sequelize.DataTypes.INTEGER,
+      primaryKey : true,
+      autoIncrement : true
+    },
     username:{
        type : Sequelize.DataTypes.STRING,
        allowNull : false
@@ -16,10 +21,21 @@ const Users = sequelize.define('user',{
     age:{
        type : Sequelize.DataTypes.INTEGER,
        defaultValue : 21
+    },
+    district:{
+        type:Sequelize.DataTypes.STRING
+    },
+    state :{
+        type:Sequelize.DataTypes.STRING
     }
+},{
+    freezeTableName : true,
+    timestamps : false
 })
 
-Users.sync().then((data)=>{
+console.log(sequelize.models.user)
+
+User.sync({ alter:true }).then((data)=>{
     console.log("Table and model synced succesffuly")
 }).catch((err)=>{
     console.log("error syncing the table and model")
