@@ -37,10 +37,21 @@ const User = sequelize.define('user',{
 console.log(sequelize.models.user)
 
 User.sync({ alter:true }).then((data)=>{
-   return User.create(
+   return User.bulkCreate(
     [{
-        username:"poouiugvissdfafagagga"
-    }]
+      username:'pu',
+      age:12,
+      password:"punya",
+      wittCodeRocks:true
+    },
+    {
+      username:"juhi",
+      age:2,
+      password:"juhi",
+      wittCodeRocks:true
+    },{
+        username:"amaldavissdfafagagga"
+    }],{validate:true}
    )
 }).then((data)=>data.forEach(element => {
     console.log(element.toJSON())
