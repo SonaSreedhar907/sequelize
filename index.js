@@ -6,10 +6,10 @@ const sequelize = new Sequelize('sys','root','root',{
 })  
 
 
-sequelize.authenticate().then(()=>{
-    console.log('connection successfull')
-}).catch((err)=>{
-    console.log('error connecting to database')
-})
+async function myFunction(){
+  await sequelize.authenticate()
+  console.log('connection succesffull sona')
+}
+myFunction()
 
 console.log('hi')
