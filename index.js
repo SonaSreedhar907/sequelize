@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-
+const { DataTypes } = Sequelize
 
 const sequelize = new Sequelize('sys','root','root',{
     dialect : 'mysql'
@@ -7,26 +7,24 @@ const sequelize = new Sequelize('sys','root','root',{
 
 const User = sequelize.define('user',{
     user_id:{
-      type : Sequelize.DataTypes.INTEGER,
+      type : DataTypes.INTEGER,
       primaryKey : true,
       autoIncrement : true
     },
     username:{
-       type : Sequelize.DataTypes.STRING,
+       type : DataTypes.STRING,
        allowNull : false
     },
     password:{
-       type : Sequelize.DataTypes.STRING,
+       type : DataTypes.STRING,
     },
     age:{
-       type : Sequelize.DataTypes.INTEGER,
+       type : DataTypes.INTEGER,
        defaultValue : 21
     },
-    district:{
-        type:Sequelize.DataTypes.STRING
-    },
-    state :{
-        type:Sequelize.DataTypes.STRING
+    wittCodeRocks:{
+        type : DataTypes.BOOLEAN,
+        defaultValue : false
     }
 },{
     freezeTableName : true,
@@ -36,8 +34,22 @@ const User = sequelize.define('user',{
 console.log(sequelize.models.user)
 
 User.sync({ alter:true }).then((data)=>{
-    console.log("Table and model synced succesffuly")
-}).catch((err)=>{
+     //working with our updated table
+     return User.create({
+        username : 'sona',
+        age : 24 ,
+        password : "sonaakhil",
+        wittCodeRocks : true
+     })
+}).then((data)=>{
+    console.log('user added to database',data.toJSON())
+    data.username = 'mango'
+    data.age = 45
+    return data.save()
+}).then((data)=>{
+    console.log('data is ',data.toJSON())
+})
+.catch((err)=>{
     console.log("error syncing the table and model")
 })
 
