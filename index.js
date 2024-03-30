@@ -51,6 +51,12 @@ const User = sequelize.define('user',{
             const uncompressed = zlib.inflateSync(Buffer.from(value,'base64'))
             return uncompressed.toString()
         }
+    },
+    aboutUser:{
+        type:DataTypes.VIRTUAL,
+        get(){
+            return `${this.username} ${this.description}`
+        }
     }
 },{
     freezeTableName : true,
@@ -61,16 +67,11 @@ console.log(sequelize.models.user)
 
 User.sync({ alter: true })
     .then(() => {
-        return User.create({
-            username:'surya',
-            password:'surya',
-            description:'this is my description it is too long'
-        })
+        return User.findOne({where:{username:'surya'}})
     })
     .then((data) => {
-        console.log(data.username)
-        console.log(data.password)
-        console.log(data.description)
+        console.log(data.aboutUser)
+        
     })
     .catch((err) => {
         console.log(err);
